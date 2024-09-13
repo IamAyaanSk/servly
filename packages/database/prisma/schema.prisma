@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator kysely {
+    provider = "prisma-kysely"
+    output = "../generated/"
+    fileName = "types.ts"
+    enumFileName = "enums.ts"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_DATABASE_URL")
+}
+
+enum ServiceType {
+  PAYMENT
+  LOAN
+  INVESTMENT
+}
+
+enum ServiceProvider {
+  BANK
+  PAYMENT_GATEWAY
+  FINTECH_PARTNER
+}
+
+model ServiceHistory {
+  id              Int             @id @default(autoincrement())
+  customerId      String          
+  serviceDate     DateTime        
+  serviceType     ServiceType     
+  description     String          
+  amount          Float           
+  status          String          
+  transactionId   String          
+  paymentMethod   String          
+  serviceProvider ServiceProvider 
+  accountId       String          
+  referenceId     String          
+  fees            Float           
+  createdAt       DateTime        @default(now()) 
+  updatedAt       DateTime        @updatedAt     
+
+  @@map("service_history") 
+}
