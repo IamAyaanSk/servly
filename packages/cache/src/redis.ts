@@ -1,7 +1,6 @@
-import dotenv from 'dotenv'
-dotenv.config()
 import { Redis } from 'ioredis'
-const REDIS_CONNECTION_URL = process.env.REDIS_CONNECTION_URL || ''
+const REDIS_CONNECTION_URL =
+  process.env.REDIS_CONNECTION_URL || 'redis://localhost:6379'
 const redis = new Redis(REDIS_CONNECTION_URL)
 
 redis.on('connecting', () => {

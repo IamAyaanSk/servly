@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { redisClient } from '@repo/cache/redis'
 import { kysleyClient } from '@repo/db/kysley'
-import { encode, decode } from '@msgpack/msgpack'
 
 import ApiResponseStatus from '@/types/enums/apiResponseStatus.js'
 
@@ -12,59 +11,79 @@ export default async function getServiceHistory(
 ) {
   try {
     const page = parseInt(req.query.page as string) || 1
+    const limit = 50000
 
-    console.time('Service history fetch from redis cache')
-    const cachedResponse = await redisClient.get(`service_history:page-${page}`)
-    console.timeEnd('Service history fetch from redis cache')
-    if (cachedResponse) {
-      console.time('Decoding data with msgpack')
-      const serviceRequestHistoryBuffer = Buffer.from(cachedResponse, 'base64')
-      const serviceRequestHistory = decode(
-        new Uint8Array(serviceRequestHistoryBuffer)
-      )
+    const [cachedDatabaseResponse, totalResultsCached] = await Promise.all([
+      redisClient.get(`service_history:page-${page}`),
+      redisClient.get(`service_history:total-results`),
+    ])
 
-      console.timeEnd('Decoding data with msgpack')
+    if (cachedDatabaseResponse && totalResultsCached) {
       return res.json({
+        usedCached: true,
         status: ApiResponseStatus.success,
-        response: serviceRequestHistory,
+        response: {
+          totalResults: parseInt(totalResultsCached),
+          totalPages: Math.ceil(parseInt(totalResultsCached) / limit),
+          data: JSON.parse(cachedDatabaseResponse),
+        },
       })
     }
 
-    const offSet = page * 50000
+    const offSet = (page - 1) * limit
 
-    console.time('Service history fetch from database')
-    const ServiceRequestHistory = await kysleyClient
-      .selectFrom('service_history')
-      .select([
-        'customerId',
-        'serviceDate',
-        'serviceType',
-        'description',
-        'amount',
-        'status',
-        'transactionId',
-        'paymentMethod',
-        'serviceProvider',
-        'accountId',
-        'referenceId',
-        'fees',
-      ])
-      .offset(offSet)
-      .limit(50000)
-      .execute()
+    const [serviceRequestHistory, totalResults] = await Promise.all([
+      kysleyClient
+        .selectFrom('service_history')
+        .select([
+          'customerId',
+          'serviceDate',
+          'serviceType',
+          'description',
+          'amount',
+          'status',
+          'transactionId',
+          'paymentMethod',
+          'serviceProvider',
+          'accountId',
+          'referenceId',
+          'fees',
+        ])
+        .offset(offSet)
+        .limit(limit)
+        .execute(),
+      kysleyClient
+        .selectFrom('service_history')
+        .select(kysleyClient.fn.count('id').as('count'))
+        .executeTakeFirst(),
+    ])
 
-    console.time('Compressing data with msgpack')
-    const compressedDataToCache = encode(ServiceRequestHistory)
-    const bufferedData = Buffer.from(compressedDataToCache)
-    console.timeEnd('Compressing data with msgpack')
+    if (!totalResults || !totalResults.count) {
+      throw new Error('Failed to fetch row counts from database')
+    }
 
-    redisClient.setex('service_history:page-${page}', 86400, bufferedData)
+    const totalCount = parseInt(totalResults.count as string)
+    const totalPages = Math.ceil(totalCount / limit)
 
-    console.timeEnd('Service history fetch from database')
+    await redisClient.setex(
+      `service_history:page-${page}`,
+      86400,
+      JSON.stringify(serviceRequestHistory)
+    )
+
+    await redisClient.setex(
+      `service_history:total-results`,
+      86400,
+      totalResults.count.toLocaleString()
+    )
 
     return res.json({
       status: ApiResponseStatus.success,
-      response: ServiceRequestHistory,
+      response: {
+        totalPages,
+        totalResults: totalCount,
+        data: serviceRequestHistory,
+      },
     })
   } catch (err) {
     next(err)

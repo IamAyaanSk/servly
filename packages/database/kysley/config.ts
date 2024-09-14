@@ -6,6 +6,9 @@ const dialect = new PostgresDialect({
   pool: new Pool({
     connectionString: process.env.POSTGRES_DATABASE_URL,
     max: 10,
+    ssl: {
+      rejectUnauthorized: false,
+    },
   }),
 })
 
