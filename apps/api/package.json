@@ -22,6 +22,7 @@
     "@repo/cache": "workspace:*",
     "@repo/data-validation": "workspace:*",
     "@repo/db": "workspace:*",
+    "@repo/types": "workspace:*",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/cors": "^2.8.17",

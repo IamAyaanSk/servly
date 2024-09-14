@@ -2,12 +2,15 @@ import { NextFunction, Request, Response } from 'express'
 import { redisClient } from '@repo/cache/redis'
 import { kysleyClient } from '@repo/db/kysley'
 import { unpack, pack } from 'msgpackr'
-
-import ApiResponseStatus from '@/types/enums/apiResponseStatus.js'
+import { ServiceHistory } from '@repo/db/types'
+import {
+  GetServiceHistoryResponse,
+  ApiResponseStatus,
+} from '@repo/types/api-responses'
 
 export default async function getServiceHistory(
   req: Request,
-  res: Response,
+  res: Response<GetServiceHistoryResponse>,
   next: NextFunction
 ) {
   try {
@@ -20,9 +23,10 @@ export default async function getServiceHistory(
     ])
 
     if (cachedDatabaseResponse && totalResultsCached) {
-      const unpackedCachedDatabaseResponse = unpack(cachedDatabaseResponse)
+      const unpackedCachedDatabaseResponse: ServiceHistory[] = unpack(
+        cachedDatabaseResponse
+      )
       return res.json({
-        usedCached: true,
         status: ApiResponseStatus.success,
         response: {
           totalResults: parseInt(totalResultsCached),
@@ -90,6 +94,6 @@ export default async function getServiceHistory(
       },
     })
   } catch (err) {
-    next(err)
+    return next(err)
   }
 }

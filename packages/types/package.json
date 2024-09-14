@@ -1,0 +1,12 @@
+{
+  "name": "@repo/types",
+  "version": "0.0.1",
+  "private": true,
+  "exports": {
+    "./api-responses": "./apiResponses.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@repo/db": "workspace:*"
+  }
+}

@@ -1,24 +1,27 @@
 import { errorResponseMap } from '@/constants/responseMaps/errorResponsMap.js'
-import ApiResponseStatus from '@/types/enums/apiResponseStatus.js'
 import { kysleyClient, sql } from '@repo/db/kysley'
 import { updateServiceRequestHistoryZodSchema } from '@repo/data-validation/zod'
 
 import { NextFunction, Request, Response } from 'express'
 import { redisClient } from '@repo/cache/redis'
+import {
+  UpdateServiceHistoryResponse,
+  ApiResponseStatus,
+} from '@repo/types/api-responses'
+
+import { HttpError } from '@/constants/global.js'
 
 export default async function (
   req: Request,
-  res: Response,
+  res: Response<UpdateServiceHistoryResponse>,
   next: NextFunction
 ) {
   try {
     const serviceRequestId = req.params.id
 
     if (!serviceRequestId) {
-      return res.status(400).json({
-        status: ApiResponseStatus.error,
-        response: errorResponseMap['service/invalidId'],
-      })
+      const error = new HttpError(errorResponseMap['service/invalidId'], 400)
+      return next(error)
     }
 
     const updateServiceRequestData = req.body
@@ -45,10 +48,8 @@ export default async function (
       .executeTakeFirst()
 
     if (!serviceToUpdate) {
-      return res.status(400).json({
-        status: ApiResponseStatus.error,
-        response: errorResponseMap['service/invalidId'],
-      })
+      const error = new HttpError(errorResponseMap['service/invalidId'], 400)
+      return next(error)
     }
 
     // Update only the fields that are present in the request body
@@ -109,6 +110,6 @@ export default async function (
       response: 'Service updated successfully',
     })
   } catch (err) {
-    next(err)
+    return next(err)
   }
 }
