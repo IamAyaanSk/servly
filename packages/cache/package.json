@@ -1,0 +1,12 @@
+{
+  "name": "@repo/cache",
+  "version": "0.0.1",
+  "private": true,
+  "exports": {
+    "./redis": "./src/redis.ts"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ioredis": "^5.4.1"
+  }
+}
