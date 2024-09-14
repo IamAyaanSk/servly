@@ -7,6 +7,7 @@ import cors from 'cors'
 import { PORT, CLIENT_DOMAIN } from '@/constants/global.js'
 import serviceRouter from '@/routes/serviceRouter.js'
 import errorHandler from './middlewares/errorHandler.js'
+import rateLimiter from './middlewares/rateLimit.js'
 
 const server = express()
 
@@ -18,10 +19,17 @@ server.use(
   })
 )
 server.use(helmet())
+
 server.use((req, res, next) => {
   res.removeHeader('X-Powered-By')
+  res.removeHeader('X-RateLimit-Limit')
+  res.removeHeader('X-RateLimit-Remaining')
+  res.removeHeader('X-RateLimit-Reset')
   next()
 })
+
+server.set('trust proxy', true)
+server.use(rateLimiter)
 
 server.use('/services', serviceRouter)
 server.use(errorHandler)
