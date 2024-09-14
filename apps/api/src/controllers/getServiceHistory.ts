@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { redisClient } from '@repo/cache/redis'
 import { kysleyClient } from '@repo/db/kysley'
+import { unpack, pack } from 'msgpackr'
 
 import ApiResponseStatus from '@/types/enums/apiResponseStatus.js'
 
@@ -14,18 +15,19 @@ export default async function getServiceHistory(
     const limit = 50000
 
     const [cachedDatabaseResponse, totalResultsCached] = await Promise.all([
-      redisClient.get(`service_history:page-${page}`),
+      redisClient.getBuffer(`service_history:page-${page}`),
       redisClient.get(`service_history:total-results`),
     ])
 
     if (cachedDatabaseResponse && totalResultsCached) {
+      const unpackedCachedDatabaseResponse = unpack(cachedDatabaseResponse)
       return res.json({
         usedCached: true,
         status: ApiResponseStatus.success,
         response: {
           totalResults: parseInt(totalResultsCached),
           totalPages: Math.ceil(parseInt(totalResultsCached) / limit),
-          data: JSON.parse(cachedDatabaseResponse),
+          data: unpackedCachedDatabaseResponse,
         },
       })
     }
@@ -65,10 +67,12 @@ export default async function getServiceHistory(
     const totalCount = parseInt(totalResults.count as string)
     const totalPages = Math.ceil(totalCount / limit)
 
+    const packedServiceRequestHistory = pack(serviceRequestHistory)
+
     await redisClient.setex(
       `service_history:page-${page}`,
       86400,
-      JSON.stringify(serviceRequestHistory)
+      packedServiceRequestHistory
     )
 
     await redisClient.setex(

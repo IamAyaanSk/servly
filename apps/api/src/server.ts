@@ -11,6 +11,8 @@ import rateLimiter from './middlewares/rateLimit.js'
 
 const server = express()
 
+server.set('trust proxy', true)
+
 server.use(express.json())
 server.use(express.urlencoded({ extended: false }))
 server.use(
@@ -28,7 +30,6 @@ server.use((req, res, next) => {
   next()
 })
 
-server.set('trust proxy', true)
 server.use(rateLimiter)
 
 server.use('/services', serviceRouter)
