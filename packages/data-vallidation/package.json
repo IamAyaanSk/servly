@@ -1,0 +1,13 @@
+{
+  "name": "@repo/data-validation",
+  "version": "0.0.1",
+  "private": true,
+  "exports": {
+    "./zod": "./src/zod.ts"
+  },
+  "dependencies": {
+    "ioredis": "^5.4.1",
+    "redis": "^4.7.0",
+    "zod": "^3.23.8"
+  }
+}

@@ -1,7 +1,7 @@
-type ErrorResponseMapKey = 'sevice/invalidId'
+type ErrorResponseMapKey = 'service/invalidId'
 
 const errorResponseMap: Record<ErrorResponseMapKey, string> = {
-  'sevice/invalidId': "The service you are looking for doesn't exists",
+  'service/invalidId': "The service you are looking for doesn't exists",
 }
 
 export { errorResponseMap }

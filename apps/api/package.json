@@ -20,6 +20,7 @@
   "devDependencies": {
     "@repo/cache": "workspace:*",
     "@repo/db": "workspace:*",
+    "@repo/data-validation": "workspace:*",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/cors": "^2.8.17",

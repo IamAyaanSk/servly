@@ -1,2 +1,3 @@
-import { db } from '../kysley/config.js'
-export const kysleyClient = db
+import { db, sql } from '../kysley/config.js'
+
+export { db as kysleyClient, sql }
