@@ -1,3 +1,12 @@
+import Hero from '@/components/hero'
+import TableContainer from '@/components/tableContainer'
+
 export default function Home() {
-  return <h1>Hello</h1>
+  return (
+    <>
+      <Hero />
+
+      <TableContainer />
+    </>
+  )
 }
