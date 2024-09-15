@@ -5,24 +5,24 @@ export type Generated<T> =
     : ColumnType<T, T | undefined, T>
 export type Timestamp = ColumnType<Date, Date | string, Date | string>
 
-import type { ServiceType, ServiceProvider } from './enums'
+import type { ServiceType, ServiceProvider, ServiceStatus } from './enums'
 
 export type ServiceHistory = {
-  id: Generated<number>
-  customerId: string
-  serviceDate: Timestamp
-  serviceType: ServiceType
+  id: Generated<string>
+  customer_id: string
+  service_date: Timestamp
+  service_type: ServiceType
   description: string
   amount: number
-  status: string
-  transactionId: string
-  paymentMethod: string
-  serviceProvider: ServiceProvider
-  accountId: string
-  referenceId: string
+  status: ServiceStatus
+  transaction_id: string
+  payment_method: string
+  service_provider: ServiceProvider
+  account_id: string
+  reference_id: string
   fees: number
-  createdAt: Generated<Timestamp>
-  updatedAt: Timestamp
+  created_at: Generated<Timestamp>
+  updated_at: Timestamp
 }
 export type DB = {
   service_history: ServiceHistory

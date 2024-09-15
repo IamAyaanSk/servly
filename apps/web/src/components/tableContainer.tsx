@@ -105,8 +105,7 @@ export default function TableContainer() {
             <Skeleton className="w-[200px] h-[20px] text-[10px] text-neutral-500" />
           ) : (
             <p className="text-xs font-medium ">
-              Showing {data?.response.data.length} of{' '}
-              {data?.response.totalResults} records
+              Showing {} of {data?.response.totalResults} records
             </p>
           )}
         </div>

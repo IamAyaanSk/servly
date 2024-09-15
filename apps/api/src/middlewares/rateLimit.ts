@@ -13,7 +13,7 @@ export default async function rateLimiter(
 
     if (!userRequestsRecord) {
       redisClient.setex(`$rate-limiter:${ip}`, 60, '1')
-      next()
+      return next()
     }
 
     const totalUserRequests = await redisClient.incr(`$rate-limiter:${ip}`)
@@ -23,11 +23,11 @@ export default async function rateLimiter(
         'Rate limit exceeded. Please wait before making more requests.',
         429
       )
-      next(error)
+      return next(error)
     }
 
-    next()
+    return next()
   } catch (err) {
-    next(err)
+    return next(err)
   }
 }

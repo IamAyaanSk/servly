@@ -31,11 +31,11 @@ export default function RootLayout({
     <ReactQueryClientProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-7xl mx-auto`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <Header />
           <Separator />
-          <main>
+          <main className="max-w-7xl mx-auto">
             {children}
             <Toaster />
           </main>

@@ -6,13 +6,12 @@ import cors from 'cors'
 
 import { PORT, CLIENT_DOMAIN } from '@/constants/global.js'
 import serviceRouter from '@/routes/serviceRouter.js'
-import errorHandler from './middlewares/errorHandler.js'
-import rateLimiter from './middlewares/rateLimit.js'
+import errorHandler from '@/middlewares/errorHandler.js'
+import rateLimiter from '@/middlewares/rateLimit.js'
 
 const server = express()
 
 server.set('trust proxy', true)
-
 server.use(express.json())
 server.use(express.urlencoded({ extended: false }))
 server.use(

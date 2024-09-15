@@ -1,11 +1,16 @@
 import { ServiceHistory } from '@repo/db/generated/types'
 
+export type GetServiceHistoryPayload = Omit<
+  ServiceHistory,
+  'created_at' | 'updated_at'
+>
+
 export interface GetServiceHistoryResponse {
   status: ApiResponseStatus.success
   response: {
     totalResults: number
     totalPages: number
-    data: ServiceHistory[]
+    payload: GetServiceHistoryPayload[]
   }
 }
 

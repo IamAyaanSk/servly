@@ -31,20 +31,18 @@ export default async function (
     const serviceToUpdate = await kysleyClient
       .selectFrom('service_history')
       .select([
-        'customerId',
-        'serviceDate',
-        'serviceType',
+        'id',
+        'customer_id',
+        'service_date',
+        'service_type',
         'description',
         'amount',
         'status',
-        'transactionId',
-        'paymentMethod',
-        'serviceProvider',
-        'accountId',
-        'referenceId',
+        'payment_method',
+        'service_provider',
         'fees',
       ])
-      .where('id', '=', parseInt(serviceRequestId))
+      .where('id', '=', serviceRequestId)
       .executeTakeFirst()
 
     if (!serviceToUpdate) {
@@ -56,10 +54,10 @@ export default async function (
     const updatedService = {
       serviceDate:
         validatedUpdateServiceRequestData.serviceDate ||
-        serviceToUpdate.serviceDate,
+        serviceToUpdate.service_date,
       serviceType:
         validatedUpdateServiceRequestData.serviceType ||
-        serviceToUpdate.serviceType,
+        serviceToUpdate.service_type,
       description:
         validatedUpdateServiceRequestData.description ||
         serviceToUpdate.description,
@@ -67,21 +65,14 @@ export default async function (
         validatedUpdateServiceRequestData.amount || serviceToUpdate.amount,
       status:
         validatedUpdateServiceRequestData.status || serviceToUpdate.status,
-      transactionId:
-        validatedUpdateServiceRequestData.transactionId ||
-        serviceToUpdate.transactionId,
+
       paymentMethod:
         validatedUpdateServiceRequestData.paymentMethod ||
-        serviceToUpdate.paymentMethod,
+        serviceToUpdate.payment_method,
       serviceProvider:
         validatedUpdateServiceRequestData.serviceProvider ||
-        serviceToUpdate.serviceProvider,
-      accountId:
-        validatedUpdateServiceRequestData.accountId ||
-        serviceToUpdate.accountId,
-      referenceId:
-        validatedUpdateServiceRequestData.referenceId ||
-        serviceToUpdate.referenceId,
+        serviceToUpdate.service_provider,
+
       fees: validatedUpdateServiceRequestData.fees || serviceToUpdate.fees,
     }
 

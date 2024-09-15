@@ -28,22 +28,28 @@ enum ServiceProvider {
   FINTECH_PARTNER
 }
 
+enum ServiceStatus {
+  COMPLETED
+  FAILED
+  PENDING
+}
+
 model ServiceHistory {
-  id              Int             @id @default(autoincrement())
-  customerId      String          
-  serviceDate     DateTime        
-  serviceType     ServiceType     
+  id              String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  customerId      String          @map("customer_id")
+  serviceDate     DateTime        @map("service_date")
+  serviceType     ServiceType     @map("service_type")
   description     String          
   amount          Float           
-  status          String          
-  transactionId   String          
-  paymentMethod   String          
-  serviceProvider ServiceProvider 
-  accountId       String          
-  referenceId     String          
+  status          ServiceStatus          
+  transactionId   String          @map("transaction_id")
+  paymentMethod   String          @map("payment_method")
+  serviceProvider ServiceProvider @map("service_provider")
+  accountId       String          @map("account_id")
+  referenceId     String          @map("reference_id")
   fees            Float           
-  createdAt       DateTime        @default(now()) 
-  updatedAt       DateTime        @updatedAt     
+  createdAt       DateTime        @default(now()) @map("created_at")
+  updatedAt       DateTime        @updatedAt      @map("updated_at")
 
   @@map("service_history") 
 }

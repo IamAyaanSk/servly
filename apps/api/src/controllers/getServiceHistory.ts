@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import { redisClient } from '@repo/cache/redis'
 import { kysleyClient } from '@repo/db/kysley'
 import { unpack, pack } from 'msgpackr'
-import { ServiceHistory } from '@repo/db/types'
+import { GetServiceHistoryPayload } from '@repo/types/api-responses'
 import {
   GetServiceHistoryResponse,
   ApiResponseStatus,
@@ -23,7 +23,7 @@ export default async function getServiceHistory(
     ])
 
     if (cachedDatabaseResponse && totalResultsCached) {
-      const unpackedCachedDatabaseResponse: ServiceHistory[] = unpack(
+      const unpackedCachedDatabaseResponse: GetServiceHistoryPayload[] = unpack(
         cachedDatabaseResponse
       )
       return res.json({
@@ -31,7 +31,7 @@ export default async function getServiceHistory(
         response: {
           totalResults: parseInt(totalResultsCached),
           totalPages: Math.ceil(parseInt(totalResultsCached) / limit),
-          data: unpackedCachedDatabaseResponse,
+          payload: unpackedCachedDatabaseResponse,
         },
       })
     }
@@ -42,17 +42,18 @@ export default async function getServiceHistory(
       kysleyClient
         .selectFrom('service_history')
         .select([
-          'customerId',
-          'serviceDate',
-          'serviceType',
+          'id',
+          'customer_id',
+          'service_date',
+          'service_type',
           'description',
           'amount',
           'status',
-          'transactionId',
-          'paymentMethod',
-          'serviceProvider',
-          'accountId',
-          'referenceId',
+          'transaction_id',
+          'payment_method',
+          'service_provider',
+          'account_id',
+          'reference_id',
           'fees',
         ])
         .offset(offSet)
@@ -64,8 +65,12 @@ export default async function getServiceHistory(
         .executeTakeFirst(),
     ])
 
-    if (!totalResults || !totalResults.count) {
+    if (!totalResults) {
+      console.log('I ran')
       throw new Error('Failed to fetch row counts from database')
+    }
+    if (!totalResults.count) {
+      totalResults.count = 0
     }
 
     const totalCount = parseInt(totalResults.count as string)
@@ -90,7 +95,7 @@ export default async function getServiceHistory(
       response: {
         totalPages,
         totalResults: totalCount,
-        data: serviceRequestHistory,
+        payload: serviceRequestHistory,
       },
     })
   } catch (err) {

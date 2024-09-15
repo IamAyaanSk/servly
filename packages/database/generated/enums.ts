@@ -11,3 +11,9 @@ export const ServiceProvider = {
 } as const
 export type ServiceProvider =
   (typeof ServiceProvider)[keyof typeof ServiceProvider]
+export const ServiceStatus = {
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  PENDING: 'PENDING',
+} as const
+export type ServiceStatus = (typeof ServiceStatus)[keyof typeof ServiceStatus]
