@@ -1,8 +1,4 @@
-import {
-  ServiceProvider,
-  ServiceStatus,
-  ServiceType,
-} from '../../database/generated/enums'
+import { ServiceProvider, ServiceStatus, ServiceType } from '@repo/db/enums'
 
 export interface GetServiceHistoryPayload {
   id: string

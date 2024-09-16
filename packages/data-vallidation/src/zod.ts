@@ -1,9 +1,5 @@
 import { z } from 'zod'
-import {
-  ServiceType,
-  ServiceStatus,
-  ServiceProvider,
-} from '../../database/generated/enums'
+import { ServiceType, ServiceStatus, ServiceProvider } from '@repo/db/enums'
 
 export const updateServiceRequestHistoryZodSchema = z.object({
   serviceType: z
