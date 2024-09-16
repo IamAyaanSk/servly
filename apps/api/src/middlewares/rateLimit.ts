@@ -1,5 +1,5 @@
 import { HttpError } from '../constants/global.js'
-import { redisClient } from '@repo/cache/redis'
+import { redisClient } from '../constants/global.js'
 import { NextFunction, Request, Response } from 'express'
 import { errorResponseMap } from '../constants/responseMaps/errorResponsMap.js'
 
