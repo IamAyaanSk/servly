@@ -7,7 +7,7 @@ import {
 } from '@repo/data-validation/zod'
 
 import { NextFunction, Request, Response } from 'express'
-import { redisClient } from '@repo/cache/redis'
+import { redisClient } from '../constants/global.js'
 import {
   UpdateServiceHistoryResponse,
   ApiResponseStatus,

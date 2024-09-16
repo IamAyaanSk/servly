@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express'
-import { redisClient } from '@repo/cache/redis'
 import { db as kysleyClient } from '@repo/db/client'
 import { unpack, pack } from 'msgpackr'
 import { GetServiceHistoryPayload } from '@repo/common-types/api-responses'
@@ -8,7 +7,8 @@ import {
   ApiResponseStatus,
 } from '@repo/common-types/api-responses'
 import { serviceHistoryQueryZodSchema } from '@repo/data-validation/zod'
-import { errorResponseMap } from '../constants/responseMaps/errorResponsMap.js'
+import { errorResponseMap} from '../constants/responseMaps/errorResponsMap.js'
+import {redisClient} from '../constants/global.js'
 
 export default async function getServiceHistory(
   req: Request,
