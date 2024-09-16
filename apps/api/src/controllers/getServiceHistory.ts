@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { redisClient } from '@repo/cache/redis'
-import { kysleyClient } from '@repo/db/kysley'
+import { db as kysleyClient } from '@repo/db/client'
 import { unpack, pack } from 'msgpackr'
 import { GetServiceHistoryPayload } from '@repo/types/api-responses'
 import {

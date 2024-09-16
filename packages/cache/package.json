@@ -2,11 +2,20 @@
   "name": "@repo/cache",
   "version": "0.0.1",
   "private": true,
+  "scripts": {
+    "build": "tsc"
+  },
   "exports": {
-    "./redis": "./src/redis.ts"
+    "./redis": {
+      "types": "./src/redis.ts",
+      "default": "./dist/redis.js"
+    }
   },
   "dependencies": {
     "ioredis": "^5.4.1",
     "redis": "^4.7.0"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*"
   }
 }

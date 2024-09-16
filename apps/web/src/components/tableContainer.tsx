@@ -16,7 +16,7 @@ const fetchServiceHistoryData = async (
   page: number
 ): Promise<GetServiceHistoryResponse> => {
   const { data } = await axios.get(
-    `http://localhost:3002/services?page=${page}`
+    `http://localhost:3000/services?page=${page}`
   )
   return data
 }

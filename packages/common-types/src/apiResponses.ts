@@ -2,13 +2,12 @@ import {
   ServiceProvider,
   ServiceStatus,
   ServiceType,
-} from '@repo/db/generated/enums'
-import { Generated, Timestamp } from '@repo/db/generated/types'
+} from '../../database/generated/enums'
 
 export interface GetServiceHistoryPayload {
-  id: Generated<string>
+  id: string
   customer_id: string
-  service_date: Timestamp
+  service_date: Date
   service_type: ServiceType
   description: string
   amount: number

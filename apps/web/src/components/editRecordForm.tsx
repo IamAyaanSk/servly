@@ -59,7 +59,7 @@ export default function EditRecordForm({
       updatedServiceData: z.infer<typeof updateServiceRequestHistoryZodSchema>
     ) => {
       return axios.post(
-        `http://localhost:3002/services/${serviceDetails.id}?page=${currentTablePage}`,
+        `http://localhost:3000/services/${serviceDetails.id}?page=${currentTablePage}`,
         updatedServiceData
       )
     },

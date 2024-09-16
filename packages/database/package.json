@@ -4,16 +4,27 @@
   "private": true,
   "scripts": {
     "db:generate": "prisma generate",
-    "db:push": "prisma db push --skip-generate"
+    "db:push": "prisma db push --skip-generate",
+    "build": "tsc"
   },
   "exports": {
-    "./kysley": "./src/kysley.ts",
-    "./types": "./generated/types.ts",
-    "./enums": "./generated/enums.ts"
+    "./client": {
+      "types": "./src/config.ts",
+      "default": "./dist/src/config.js"
+    },
+    "./types": {
+      "types": "./src/generated/types.ts",
+      "default": "./dist/generated/types.js"
+    },
+    "./enums": {
+      "types": "./src/generated/enums.ts",
+      "default": "./dist/generated/enums.js"
+    }
   },
   "devDependencies": {
     "@types/pg": "^8.11.9",
-    "prisma": "^5.19.1"
+    "prisma": "^5.19.1",
+    "@repo/typescript-config": "workspace:*"
   },
   "dependencies": {
     "kysely": "^0.27.4",

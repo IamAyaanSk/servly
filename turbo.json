@@ -20,6 +20,10 @@
       "dependsOn": ["^db:generate"],
       "cache": false,
       "persistent": true
+    },
+    "start": {
+      "dependsOn": ["^start"],
+      "cache": false
     }
   }
 }

@@ -1,20 +1,15 @@
 {
-  "name": "@repo/data-validation",
+  "name": "@repo/types",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "build": "tsc"
   },
   "exports": {
-    "./zod": {
-      "types": "./src/zod.ts",
-      "default": "./dist/zod.js"
+    "./api-responses": {
+      "types": "./src/apiResponses.ts",
+      "default": "./dist/apiResponses.js"
     }
-  },
-  "dependencies": {
-    "ioredis": "^5.4.1",
-    "redis": "^4.7.0",
-    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@repo/db": "workspace:*",

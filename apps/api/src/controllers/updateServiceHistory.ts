@@ -1,5 +1,5 @@
 import { errorResponseMap } from '@/constants/responseMaps/errorResponsMap.js'
-import { kysleyClient, sql } from '@repo/db/kysley'
+import { db as kysleyClient, sql } from '@repo/db/client'
 import {
   serviceHistoryQueryZodSchema,
   updateServiceHistoryParamsZODSchema,
