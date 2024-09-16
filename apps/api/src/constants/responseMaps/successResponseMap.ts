@@ -1,7 +1,8 @@
-type SuccessResponseMapKey = 'data-fetch'
+type SuccessResponseMapKey = 'service/fetch' | 'service/update'
 
 const successResponseMap: Record<SuccessResponseMapKey, string> = {
-  'data-fetch': 'Fetched data successfully',
+  'service/fetch': 'Fetched service history successfully.',
+  'service/update': 'Updated service history successfully.',
 }
 
 export { successResponseMap }

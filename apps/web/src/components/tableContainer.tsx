@@ -5,19 +5,18 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { GetServiceHistoryResponse } from '@repo/types/api-responses'
 import { Skeleton } from '@/components/ui/skeleton'
-import VirtualizedTable from './virtualizedTable'
+import VirtualizedTable from '@/components/virtualizedTable'
 import { useToast } from '@/hooks/use-toast'
-import { Button } from './ui/button'
+import { Button } from '@/components/ui/button'
 import { FaCloudDownloadAlt } from 'react-icons/fa'
-import Pagination from './pagination'
+import Pagination from '@/components/pagination'
 import { CurrentTablePageContext } from '@/contexts/currentTablePage'
+import { SERVER_URL } from '@/constants/global'
 
 const fetchServiceHistoryData = async (
   page: number
 ): Promise<GetServiceHistoryResponse> => {
-  const { data } = await axios.get(
-    `http://localhost:3000/services?page=${page}`
-  )
+  const { data } = await axios.get(`${SERVER_URL}/services?page=${page}`)
   return data
 }
 

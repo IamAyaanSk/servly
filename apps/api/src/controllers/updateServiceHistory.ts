@@ -1,4 +1,4 @@
-import { errorResponseMap } from '@/constants/responseMaps/errorResponsMap.js'
+import { errorResponseMap } from '../constants/responseMaps/errorResponsMap.js'
 import { db as kysleyClient, sql } from '@repo/db/client'
 import {
   serviceHistoryQueryZodSchema,
@@ -13,7 +13,8 @@ import {
   ApiResponseStatus,
 } from '@repo/types/api-responses'
 
-import { HttpError } from '@/constants/global.js'
+import { HttpError } from '../constants/global.js'
+import { successResponseMap } from '../constants/responseMaps/successResponseMap.js'
 
 export default async function (
   req: Request,
@@ -96,7 +97,7 @@ export default async function (
 
     return res.status(201).json({
       status: ApiResponseStatus.success,
-      response: 'Service updated successfully',
+      response: successResponseMap['service/fetch'],
     })
   } catch (err) {
     return next(err)

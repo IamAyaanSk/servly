@@ -1,6 +1,7 @@
-import { HttpError } from '@/constants/global.js'
+import { HttpError } from '../constants/global.js'
 import { redisClient } from '@repo/cache/redis'
 import { NextFunction, Request, Response } from 'express'
+import { errorResponseMap } from '../constants/responseMaps/errorResponsMap.js'
 
 export default async function rateLimiter(
   req: Request,
@@ -19,10 +20,7 @@ export default async function rateLimiter(
     const totalUserRequests = await redisClient.incr(`$rate-limiter:${ip}`)
 
     if (totalUserRequests - 1 > 20) {
-      const error = new HttpError(
-        'Rate limit exceeded. Please wait before making more requests.',
-        429
-      )
+      const error = new HttpError(errorResponseMap['service/rateLimit'], 429)
       return next(error)
     }
 

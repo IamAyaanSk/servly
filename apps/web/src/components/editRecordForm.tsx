@@ -31,6 +31,7 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from './ui/textarea'
 import { useToast } from '@/hooks/use-toast'
+import { SERVER_URL } from '@/constants/global'
 
 export default function EditRecordForm({
   serviceDetails,
@@ -59,7 +60,7 @@ export default function EditRecordForm({
       updatedServiceData: z.infer<typeof updateServiceRequestHistoryZodSchema>
     ) => {
       return axios.post(
-        `http://localhost:3000/services/${serviceDetails.id}?page=${currentTablePage}`,
+        `${SERVER_URL}/services/${serviceDetails.id}?page=${currentTablePage}`,
         updatedServiceData
       )
     },

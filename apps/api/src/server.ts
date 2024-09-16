@@ -5,10 +5,10 @@ import express from 'express'
 import helmet from 'helmet'
 import cors from 'cors'
 
-import { PORT, CLIENT_DOMAIN } from '@/constants/global.js'
-import serviceRouter from '@/routes/serviceRouter.js'
-import errorHandler from '@/middlewares/errorHandler.js'
-import rateLimiter from '@/middlewares/rateLimit.js'
+import { PORT, CLIENT_DOMAIN } from './constants/global.js'
+import serviceRouter from './routes/serviceRouter.js'
+import errorHandler from './middlewares/errorHandler.js'
+import rateLimiter from './middlewares/rateLimit.js'
 
 const server = express()
 
@@ -36,5 +36,5 @@ server.use('/services', serviceRouter)
 server.use(errorHandler)
 
 server.listen(PORT, () => {
-  console.log(`Server is Live at http://localhost:${PORT} 🚀`)
+  console.log(`Server is Live at port - {PORT} 🚀`)
 })

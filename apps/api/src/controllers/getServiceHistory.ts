@@ -8,6 +8,7 @@ import {
   ApiResponseStatus,
 } from '@repo/types/api-responses'
 import { serviceHistoryQueryZodSchema } from '@repo/data-validation/zod'
+import { errorResponseMap } from '../constants/responseMaps/errorResponsMap.js'
 
 export default async function getServiceHistory(
   req: Request,
@@ -68,7 +69,7 @@ export default async function getServiceHistory(
     ])
 
     if (!totalResults) {
-      throw new Error('Failed to fetch row counts from database')
+      throw new Error(errorResponseMap['service/failToFetch'])
     }
     if (!totalResults.count) {
       totalResults.count = 0

@@ -4,7 +4,7 @@ import { DB } from '../generated/types'
 
 const dialect = new PostgresDialect({
   pool: new Pool({
-    connectionString: process.env.POSTGRES_DATABASE_URL,
+    connectionString: process.env.POSTGRES_CONNECTION_URL,
     max: 10,
   }),
 })

@@ -1,5 +1,5 @@
-import getServiceHistory from '@/controllers/getServiceHistory.js'
-import updateServiceHistory from '@/controllers/updateServiceHistory.js'
+import getServiceHistory from '../controllers/getServiceHistory.js'
+import updateServiceHistory from '../controllers/updateServiceHistory.js'
 import express, { Router } from 'express'
 const router: Router = express.Router()
 
