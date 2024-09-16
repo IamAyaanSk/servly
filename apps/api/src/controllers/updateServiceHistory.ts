@@ -11,7 +11,7 @@ import { redisClient } from '@repo/cache/redis'
 import {
   UpdateServiceHistoryResponse,
   ApiResponseStatus,
-} from '@repo/types/api-responses'
+} from '@repo/common-types/api-responses'
 
 import { HttpError } from '../constants/global.js'
 import { successResponseMap } from '../constants/responseMaps/successResponseMap.js'

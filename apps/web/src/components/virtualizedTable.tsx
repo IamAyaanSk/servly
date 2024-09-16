@@ -1,6 +1,6 @@
-import { GetServiceHistoryResponse } from '@repo/types/api-responses'
+import { GetServiceHistoryResponse } from '@repo/common-types/api-responses'
 import { AutoSizer, List, ListRowRenderer } from 'react-virtualized'
-import { GetServiceHistoryPayload } from '@repo/types/api-responses'
+import { GetServiceHistoryPayload } from '@repo/common-types/api-responses'
 import {
   Table,
   TableBody,

@@ -1,5 +1,8 @@
 import { HttpError } from '../constants/global.js'
-import { ApiResponseStatus, ErrorResponse } from '@repo/types/api-responses'
+import {
+  ApiResponseStatus,
+  ErrorResponse,
+} from '@repo/common-types/api-responses'
 import { NextFunction, Response, Request } from 'express'
 import { errorResponseMap } from '../constants/responseMaps/errorResponsMap.js'
 

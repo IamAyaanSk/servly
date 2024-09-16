@@ -36,5 +36,5 @@ server.use('/services', serviceRouter)
 server.use(errorHandler)
 
 server.listen(PORT, () => {
-  console.log(`Server is Live at port - {PORT} 🚀`)
+  console.log(`Server is Live at port - ${PORT} 🚀`)
 })

@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { GetServiceHistoryPayload } from '@repo/types/api-responses'
+import { GetServiceHistoryPayload } from '@repo/common-types/api-responses'
 import EditRecordForm from './editRecordForm'
 import { DialogTrigger } from '@radix-ui/react-dialog'
 import { MdEdit } from 'react-icons/md'

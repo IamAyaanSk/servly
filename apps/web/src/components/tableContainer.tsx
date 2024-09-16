@@ -3,7 +3,7 @@
 import axios from 'axios'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
-import { GetServiceHistoryResponse } from '@repo/types/api-responses'
+import { GetServiceHistoryResponse } from '@repo/common-types/api-responses'
 import { Skeleton } from '@/components/ui/skeleton'
 import VirtualizedTable from '@/components/virtualizedTable'
 import { useToast } from '@/hooks/use-toast'

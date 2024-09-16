@@ -1,5 +1,5 @@
 {
-  "name": "@repo/types",
+  "name": "@repo/common-types",
   "version": "0.0.1",
   "private": true,
   "scripts": {
