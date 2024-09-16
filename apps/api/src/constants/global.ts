@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const PORT = process.env.PORT || 3000
-const CLIENT_DOMAIN = process.env.CLIENT_URL || 'http://localhost:8080'
+const CLIENT_DOMAIN = process.env.CLIENT_DOMAIN || 'http://localhost:8080'
 
 class HttpError extends Error {
   status: number
