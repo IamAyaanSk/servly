@@ -1,5 +1,3 @@
-'use client'
-
 import { GetServiceHistoryResponse } from '@repo/types/api-responses'
 import { AutoSizer, List, ListRowRenderer } from 'react-virtualized'
 import { GetServiceHistoryPayload } from '@repo/types/api-responses'
@@ -25,55 +23,62 @@ export default function VirtualizedTable({
   const rowRenderer: ListRowRenderer = ({ key, index, style }) => {
     const serviceDetails: GetServiceHistoryPayload | undefined =
       data.response.payload[index]
+    if (!serviceDetails) return
     return (
       <TableRow
         key={key}
         style={style}
         className="text-xs text-gray-600 relative group"
       >
-        <TableCell className="min-w-[240px] pr-3 pl-8">
-          <span>{serviceDetails?.customerId}</span>
+        <TableCell className="min-w-[225px] max-w-[225px] pr-3 pl-8">
+          <span className="">{serviceDetails.customer_id}</span>
         </TableCell>
-        <TableCell className="min-w-[80px] pl-0 pr-3">
-          <span>{serviceDetails?.serviceType}</span>
+        <TableCell className="min-w-[100px] max-w-[100px] pl-0 pr-3">
+          <span>{serviceDetails.service_type}</span>
         </TableCell>
-        <TableCell className="min-w-[200px] pl-0 pr-3">
-          <span>{serviceDetails?.description}</span>
+        <TableCell className="min-w-[260px] max-w-[260px] pl-0 pr-3 whitespace-pre-wrap">
+          <span>{serviceDetails.description}</span>
         </TableCell>
-        <TableCell className="min-w-[125px] pl-0 pr-3">
+        <TableCell className="min-w-[135px] max-w-[135px] pl-0 pr-3">
           <span
-            className={`py-1 px-2 rounded-xl ${serviceDetails?.status === 'Completed' ? ' bg-green-100' : 'bg-red-100'}`}
+            className={`py-1 px-2 rounded-xl ${
+              serviceDetails.status === 'COMPLETED'
+                ? 'bg-green-100'
+                : serviceDetails.status === 'PENDING'
+                  ? 'bg-blue-100'
+                  : 'bg-red-100'
+            }`}
           >
-            {serviceDetails?.status}
+            {serviceDetails.status}
           </span>
         </TableCell>
-        <TableCell className="min-w-[230px] pl-0 pr-3">
+        <TableCell className="min-w-[250px] max-w-[250px] pl-0 pr-3">
           <span>
-            {timestampFormatter(serviceDetails?.serviceDate.toString())}
+            {timestampFormatter(serviceDetails?.service_date.toLocaleString())}
           </span>
         </TableCell>
-        <TableCell className="min-w-[130px] pl-0 pr-3">
-          <span>{serviceDetails?.transactionId}</span>
+        <TableCell className="min-w-[225px] max-w-[225px] pl-0 pr-3">
+          <span>{serviceDetails.transaction_id}</span>
         </TableCell>
-        <TableCell className="min-w-[150px] pl-0 pr-3">
-          <span>{serviceDetails?.paymentMethod}</span>
+        <TableCell className="min-w-[150px] max-w-[150px] pl-0 pr-3">
+          <span>{serviceDetails.payment_method}</span>
         </TableCell>
-        <TableCell className="min-w-[100px] pl-0 pr-3">
-          <span>₹ {serviceDetails?.amount}</span>
+        <TableCell className="min-w-[100px] max-w-[100px] pl-0 pr-3">
+          <span>₹ {serviceDetails.amount}</span>
         </TableCell>
-        <TableCell className="min-w-[100px] pl-0 pr-3">
-          <span>₹ {serviceDetails?.fees}</span>
+        <TableCell className="min-w-[100px] max-w-[100px] pl-0 pr-3">
+          <span>₹ {serviceDetails.fees}</span>
         </TableCell>
-        <TableCell className="min-w-[100px] pl-0 pr-3">
-          <span>{serviceDetails?.serviceProvider}</span>
+        <TableCell className="min-w-[150px] max-w-[150px] pl-0 pr-3">
+          <span>{serviceDetails.service_provider}</span>
         </TableCell>
-        <TableCell className="min-w-[130px] pl-0 pr-3">
-          <span>{serviceDetails?.accountId}</span>
+        <TableCell className="min-w-[125px] max-w-[125px] pl-0 pr-3">
+          <span>{serviceDetails.account_id}</span>
         </TableCell>
-        <TableCell className="min-w-[130px] pl-0 pr-3">
-          <span>{serviceDetails?.referenceId}</span>
+        <TableCell className="min-w-[125px] max-w-[125px] pl-0 pr-3">
+          <span>{serviceDetails.reference_id}</span>
         </TableCell>
-        <EditRecord customerId={serviceDetails?.customerId} />
+        <EditRecord serviceDetails={serviceDetails} />
       </TableRow>
     )
   }
@@ -83,35 +88,41 @@ export default function VirtualizedTable({
       <Table className="overflow-clip h-full">
         <TableHeader className="border-b-2">
           <TableRow className="text-sm">
-            <TableHead className="min-w-[240px] max-w-52 pr-0 pl-8">
+            <TableHead className="min-w-[225px] max-w-[225px] pr-0 pl-8">
               Customer Id
             </TableHead>
 
-            <TableHead className="min-w-[80px] max-w-32 pl-0">Type</TableHead>
-            <TableHead className="min-w-[200px] max-w-52 pl-0">
+            <TableHead className="min-w-[100px] max-w-[100px] pl-0">
+              Type
+            </TableHead>
+            <TableHead className="min-w-[260px] max-w-[260px] pl-0">
               Description
             </TableHead>
-            <TableHead className="min-w-[125px] max-w-32 pl-0">
+            <TableHead className="min-w-[135px] max-w-[135px] pl-0">
               Status
             </TableHead>
-            <TableHead className="min-w-[230px] max-w-56 pl-0">Date</TableHead>
-            <TableHead className="min-w-[130px] max-w-32 pl-0">
+            <TableHead className="min-w-[250px] max-w-[250px] pl-0">
+              Date
+            </TableHead>
+            <TableHead className="min-w-[225px] max-w-[225px] pl-0">
               Transaction Id
             </TableHead>
-            <TableHead className="min-w-[150px] max-w-52 pl-0">
+            <TableHead className="min-w-[150px] max-w-[150px] pl-0">
               Payment Method
             </TableHead>
-            <TableHead className="min-w-[100px] max-w-28 pl-0">
+            <TableHead className="min-w-[100px] max-w-[100px] pl-0">
               Amount
             </TableHead>
-            <TableHead className="min-w-[100px] max-w-24 pl-0">Fees</TableHead>
-            <TableHead className="min-w-[100px] max-w-24 pl-0">
+            <TableHead className="min-w-[100px] max-w-[100px] pl-0">
+              Fees
+            </TableHead>
+            <TableHead className="min-w-[150px] max-w-[150px] pl-0">
               Provider
             </TableHead>
-            <TableHead className="min-w-[130px] max-w-32 pl-0">
+            <TableHead className="min-w-[125px] max-w-[125px] pl-0">
               Account Id
             </TableHead>
-            <TableHead className="min-w-[130px] max-w-32 pl-0">
+            <TableHead className="min-w-[125px] max-w-[125px] pl-0">
               Reference Id
             </TableHead>
           </TableRow>

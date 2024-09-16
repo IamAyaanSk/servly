@@ -8,7 +8,8 @@
   },
   "exports": {
     "./kysley": "./src/kysley.ts",
-    "./types": "./generated/types.ts"
+    "./types": "./generated/types.ts",
+    "./enums": "./generated/enums.ts"
   },
   "devDependencies": {
     "@types/pg": "^8.11.9",

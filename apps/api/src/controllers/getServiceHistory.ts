@@ -7,6 +7,7 @@ import {
   GetServiceHistoryResponse,
   ApiResponseStatus,
 } from '@repo/types/api-responses'
+import { serviceHistoryQueryZodSchema } from '@repo/data-validation/zod'
 
 export default async function getServiceHistory(
   req: Request,
@@ -14,7 +15,7 @@ export default async function getServiceHistory(
   next: NextFunction
 ) {
   try {
-    const page = parseInt(req.query.page as string) || 1
+    const { page } = serviceHistoryQueryZodSchema.parse(req.query)
     const limit = 50000
 
     const [cachedDatabaseResponse, totalResultsCached] = await Promise.all([
@@ -58,6 +59,7 @@ export default async function getServiceHistory(
         ])
         .offset(offSet)
         .limit(limit)
+        .orderBy('created_at', 'desc')
         .execute(),
       kysleyClient
         .selectFrom('service_history')
@@ -66,7 +68,6 @@ export default async function getServiceHistory(
     ])
 
     if (!totalResults) {
-      console.log('I ran')
       throw new Error('Failed to fetch row counts from database')
     }
     if (!totalResults.count) {

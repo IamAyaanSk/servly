@@ -1,38 +1,37 @@
-import { Button } from '@/components/ui/button'
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
+import { GetServiceHistoryPayload } from '@repo/types/api-responses'
+import EditRecordForm from './editRecordForm'
+import { DialogTrigger } from '@radix-ui/react-dialog'
 import { MdEdit } from 'react-icons/md'
 
-export default function EditRecord({ customerId }: { customerId: string }) {
+export default function EditRecord({
+  serviceDetails,
+}: {
+  serviceDetails: GetServiceHistoryPayload
+}) {
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger>
         <MdEdit className="absolute left-2 bottom-1/2 hidden hover:cursor-pointer group-hover:block" />
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Edit Record</DialogTitle>
           <DialogDescription>
-            <span className="text-neutral-600">Customer Id: </span>
-            <span className="text-xs text-neutral-500">{customerId}</span>
+            <span>Customer id: </span>
+            {serviceDetails.customer_id}
           </DialogDescription>
         </DialogHeader>
+        <EditRecordForm serviceDetails={serviceDetails} />
 
-        <DialogFooter className="sm:justify-start">
-          <DialogClose asChild>
-            <Button type="button" variant="secondary">
-              Close
-            </Button>
-          </DialogClose>
-        </DialogFooter>
+        <DialogFooter></DialogFooter>
       </DialogContent>
     </Dialog>
   )

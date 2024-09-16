@@ -1,31 +1,17 @@
 import { z } from 'zod'
+import { ServiceType, ServiceStatus, ServiceProvider } from '@repo/db/enums'
 
-const serviceTypeEnum = ['PAYMENT', 'LOAN', 'INVESTMENT'] as const
-const serviceProviderEnum = [
-  'BANK',
-  'PAYMENT_GATEWAY',
-  'FINTECH_PROVIDER',
-] as const
-const statusEnum = ['COMPLETED', 'FAILED', 'PENDING'] as const
-
-const updateServiceRequestHistorySchema = z.object({
-  serviceDate: z
-    .string()
-    .datetime({
-      message: 'Please enter date and time in a valid format',
-    })
-    .optional(),
-
+export const updateServiceRequestHistoryZodSchema = z.object({
   serviceType: z
-    .enum(serviceTypeEnum, {
+    .nativeEnum(ServiceType, {
       message: 'Please select a valid service type',
     })
     .optional(),
 
   description: z
     .string()
-    .max(20, {
-      message: 'Payment method should not be more than 12 characters.',
+    .max(50, {
+      message: 'Description should not be more than 50 characters.',
     })
     .optional(),
 
@@ -35,20 +21,20 @@ const updateServiceRequestHistorySchema = z.object({
     .optional(),
 
   status: z
-    .enum(statusEnum, {
+    .nativeEnum(ServiceStatus, {
       message: 'Please select a valid status',
     })
     .optional(),
 
   paymentMethod: z
     .string()
-    .max(12, {
-      message: 'Payment method should not be more than 12 characters.',
+    .max(20, {
+      message: 'Payment method should not be more than 20 characters.',
     })
     .optional(),
 
   serviceProvider: z
-    .enum(serviceProviderEnum, {
+    .nativeEnum(ServiceProvider, {
       message: 'Please select a valid service provider',
     })
     .optional(),
@@ -56,6 +42,18 @@ const updateServiceRequestHistorySchema = z.object({
   fees: z.number().optional(),
 })
 
+export const updateServiceHistoryParamsZODSchema = z.object({
+  id: z.string().uuid({
+    message: 'Please pass a valid service id',
+  }),
+})
+
+export const serviceHistoryQueryZodSchema = z.object({
+  page: z
+    .string()
+    .regex(/^\d+$/, { message: 'Page must be a number' })
+    .transform(Number)
+    .refine((val) => val > 0, { message: 'Page must be a positive number' }),
+})
+
 export const zod = z
-export const updateServiceRequestHistoryZodSchema =
-  updateServiceRequestHistorySchema

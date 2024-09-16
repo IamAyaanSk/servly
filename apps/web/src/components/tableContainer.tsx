@@ -1,6 +1,7 @@
 'use client'
+
 import axios from 'axios'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { GetServiceHistoryResponse } from '@repo/types/api-responses'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -9,6 +10,7 @@ import { useToast } from '@/hooks/use-toast'
 import { Button } from './ui/button'
 import { FaCloudDownloadAlt } from 'react-icons/fa'
 import Pagination from './pagination'
+import { CurrentTablePageContext } from '@/contexts/currentTablePage'
 
 const fetchServiceHistoryData = async (
   page: number
@@ -22,12 +24,24 @@ const fetchServiceHistoryData = async (
 export default function TableContainer() {
   const { toast } = useToast()
   const [tablePage, setTablePage] = useState<number>(1)
+  const queryClient = useQueryClient()
 
   const { isPending, isError, data, error } =
     useQuery<GetServiceHistoryResponse>({
-      queryKey: ['service-history', tablePage],
+      queryKey: ['get-service-history', tablePage],
       queryFn: () => fetchServiceHistoryData(tablePage),
     })
+
+  const prefetchSecondPage = async () => {
+    await queryClient.prefetchQuery({
+      queryKey: ['get-service-history', 2],
+      queryFn: () => fetchServiceHistoryData(2),
+    })
+  }
+
+  if (tablePage === 1) {
+    prefetchSecondPage()
+  }
 
   useEffect(() => {
     if (isError) {
@@ -37,13 +51,7 @@ export default function TableContainer() {
         variant: 'destructive',
       })
     }
-
-    if (data) {
-      toast({
-        title: '✅ Data fetched successfully',
-      })
-    }
-  }, [isError, data])
+  }, [isError])
 
   return (
     <section className="p-6 m-6 rounded-lg shadow-lg border-2 border-opacity-10 flex flex-col justify-center">
@@ -83,7 +91,9 @@ export default function TableContainer() {
 
         {data && (
           <section className="border rounded-lg w-full h-[450px] mt-5 flex justify-center items-center overflow-clip">
-            {data && <VirtualizedTable data={data} />}
+            <CurrentTablePageContext.Provider value={tablePage}>
+              {data && <VirtualizedTable data={data} />}
+            </CurrentTablePageContext.Provider>
           </section>
         )}
       </div>
@@ -105,7 +115,8 @@ export default function TableContainer() {
             <Skeleton className="w-[200px] h-[20px] text-[10px] text-neutral-500" />
           ) : (
             <p className="text-xs font-medium ">
-              Showing {} of {data?.response.totalResults} records
+              Showing {data?.response.payload.length} of{' '}
+              {data?.response.totalResults} records
             </p>
           )}
         </div>

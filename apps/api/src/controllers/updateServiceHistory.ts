@@ -1,6 +1,10 @@
 import { errorResponseMap } from '@/constants/responseMaps/errorResponsMap.js'
 import { kysleyClient, sql } from '@repo/db/kysley'
-import { updateServiceRequestHistoryZodSchema } from '@repo/data-validation/zod'
+import {
+  serviceHistoryQueryZodSchema,
+  updateServiceHistoryParamsZODSchema,
+  updateServiceRequestHistoryZodSchema,
+} from '@repo/data-validation/zod'
 
 import { NextFunction, Request, Response } from 'express'
 import { redisClient } from '@repo/cache/redis'
@@ -17,9 +21,10 @@ export default async function (
   next: NextFunction
 ) {
   try {
-    const serviceRequestId = req.params.id
+    const { id } = updateServiceHistoryParamsZODSchema.parse(req.params)
+    const { page } = serviceHistoryQueryZodSchema.parse(req.query)
 
-    if (!serviceRequestId) {
+    if (!id) {
       const error = new HttpError(errorResponseMap['service/invalidId'], 400)
       return next(error)
     }
@@ -42,7 +47,7 @@ export default async function (
         'service_provider',
         'fees',
       ])
-      .where('id', '=', serviceRequestId)
+      .where('id', '=', id)
       .executeTakeFirst()
 
     if (!serviceToUpdate) {
@@ -52,10 +57,7 @@ export default async function (
 
     // Update only the fields that are present in the request body
     const updatedService = {
-      serviceDate:
-        validatedUpdateServiceRequestData.serviceDate ||
-        serviceToUpdate.service_date,
-      serviceType:
+      service_type:
         validatedUpdateServiceRequestData.serviceType ||
         serviceToUpdate.service_type,
       description:
@@ -66,10 +68,10 @@ export default async function (
       status:
         validatedUpdateServiceRequestData.status || serviceToUpdate.status,
 
-      paymentMethod:
+      payment_method:
         validatedUpdateServiceRequestData.paymentMethod ||
         serviceToUpdate.payment_method,
-      serviceProvider:
+      service_provider:
         validatedUpdateServiceRequestData.serviceProvider ||
         serviceToUpdate.service_provider,
 
@@ -77,7 +79,7 @@ export default async function (
     }
 
     await kysleyClient.transaction().execute(async (trx) => {
-      await sql`SELECT 1 FROM service_history WHERE id = ${serviceRequestId} FOR UPDATE;`.execute(
+      await sql`SELECT 1 FROM service_history WHERE id = ${id} FOR UPDATE;`.execute(
         trx
       )
 
@@ -86,15 +88,11 @@ export default async function (
         .set({
           ...updatedService,
         })
+        .where('id', '=', id)
         .executeTakeFirstOrThrow()
     })
 
-    // Invalidate cache
-    if (parseInt(serviceRequestId) < 50000) {
-      redisClient.del('service_history:page-1')
-    } else {
-      redisClient.del('service_history:page:2')
-    }
+    redisClient.del(`service_history:page-${page}`)
 
     return res.status(201).json({
       status: ApiResponseStatus.success,
