@@ -39,4 +39,6 @@ server.listen(PORT, () => {
   console.log(`Server is Live at port - ${PORT} 🚀`)
 })
 
+console.log(process.env.REDIS_CONNECTION_URL, process.env)
+
 export default server
