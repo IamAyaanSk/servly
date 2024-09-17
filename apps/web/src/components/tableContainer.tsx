@@ -31,16 +31,16 @@ export default function TableContainer() {
       queryFn: () => fetchServiceHistoryData(tablePage),
     })
 
-  // const prefetchSecondPage = async () => {
-  //   await queryClient.prefetchQuery({
-  //     queryKey: ['get-service-history', 2],
-  //     queryFn: () => fetchServiceHistoryData(2),
-  //   })
-  // }
+  const prefetchSecondPage = async () => {
+    await queryClient.prefetchQuery({
+      queryKey: ['get-service-history', 2],
+      queryFn: () => fetchServiceHistoryData(2),
+    })
+  }
 
-  // if (tablePage === 1) {
-  //   prefetchSecondPage()
-  // }
+  if (tablePage === 1) {
+    prefetchSecondPage()
+  }
 
   useEffect(() => {
     if (isError) {
