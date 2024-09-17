@@ -4,7 +4,7 @@ Servly is a fullstack application which manages huge amount of data and renders 
 
 ## Features
 
-- Data is fetched parallely for the next page.
+- Optimized data fetching for next page.
 - Implemnted virtualization to render 50,0000 rows of data.
 - Levaraged shadcn to create awesome ui.
 - Implemented rate limit on the api.
@@ -23,10 +23,16 @@ Servly is a fullstack application which manages huge amount of data and renders 
 
 ## Chalanges faced
 
-- Setting up the Turborepo
+- Setting up the Turborepo.  
   It took some time to understand the overall setup and idea of turborepo, but it was worth it!
 - Implemnting a good type safety in all parts of the repository.
 - Rendering 50k rows simultaneously on frontend.
   To achieve this I implemented virtualization.
 - Ensuring data consistancy.
   Understood the best cases where we should invalidate cache.
+- Memory leaks.
+  Used message pack for performant serialization/deserialization.
+
+## Author
+
+### Ayaan Shaikh
