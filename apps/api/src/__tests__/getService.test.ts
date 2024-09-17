@@ -2,6 +2,7 @@ import request from 'supertest'
 import express, { Express } from 'express'
 import getServiceHistory from '../controllers/getServiceHistory.js'
 import { redisClient } from '../constants/global.js'
+import { db } from '@repo/db/client'
 
 import {
   ApiResponseStatus,
@@ -10,13 +11,8 @@ import {
 } from '@repo/common-types/api-responses'
 import { pack } from 'msgpackr'
 
-jest.mock('../constants/global.js', () => ({
-  redisClient: {
-    getBuffer: jest.fn(),
-    get: jest.fn(),
-    setex: jest.fn(),
-  },
-}))
+jest.mock('../constants/global.js')
+jest.mock('@repo/db/client')
 
 const app: Express = express()
 app.get('/services', getServiceHistory)

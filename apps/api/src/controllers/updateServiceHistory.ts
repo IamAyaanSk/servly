@@ -88,6 +88,8 @@ export default async function (
         .updateTable('service_history')
         .set({
           ...updatedService,
+          amount: Number(updatedService.amount),
+          fees: Number(updatedService.fees),
         })
         .where('id', '=', id)
         .executeTakeFirstOrThrow()
