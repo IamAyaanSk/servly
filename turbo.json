@@ -24,6 +24,10 @@
     "start": {
       "dependsOn": ["^start"],
       "cache": false
+    },
+    "test": {
+      "dependsOn": ["^test"],
+      "cache": true
     }
   }
 }

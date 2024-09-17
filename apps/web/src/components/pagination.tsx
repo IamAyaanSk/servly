@@ -29,6 +29,7 @@ export default function Pagination({
         {Array.from({ length: totalPages }).map((_, index) => {
           return (
             <Button
+              key={index}
               className={`text-[12px] bg-neutral-800 rounded-full h-2 w-3 p-[10px] ${index + 1 === currentPage && 'bg-neutral-800/70 hover:bg-neutral-800/70 hover:cursor-not-allowed'}`}
               onClick={() => {
                 setCurrentPage(index + 1)

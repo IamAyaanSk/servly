@@ -10,7 +10,7 @@ import serviceRouter from './routes/serviceRouter.js'
 import errorHandler from './middlewares/errorHandler.js'
 import rateLimiter from './middlewares/rateLimit.js'
 
-const server = express()
+const server: express.Application = express()
 
 server.set('trust proxy', true)
 server.use(express.json())
@@ -38,3 +38,5 @@ server.use(errorHandler)
 server.listen(PORT, () => {
   console.log(`Server is Live at port - ${PORT} 🚀`)
 })
+
+export default server
