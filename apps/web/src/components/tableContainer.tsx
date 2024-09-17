@@ -38,10 +38,6 @@ export default function TableContainer() {
     })
   }
 
-  if (tablePage === 1) {
-    prefetchSecondPage()
-  }
-
   useEffect(() => {
     if (isError) {
       toast({
@@ -50,7 +46,11 @@ export default function TableContainer() {
         variant: 'destructive',
       })
     }
-  }, [isError])
+
+    if (data && tablePage === 1) {
+      prefetchSecondPage()
+    }
+  }, [isError, data])
 
   return (
     <section className="p-6 m-6 rounded-lg shadow-lg border-2 border-opacity-10 flex flex-col justify-center">
