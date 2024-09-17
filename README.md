@@ -1,81 +1,32 @@
-# Turborepo starter
+# Servly
 
-This is an official starter Turborepo.
+Servly is a fullstack application which manages huge amount of data and renders it effectively.
 
-## Using this example
+## Features
 
-Run the following command:
+- Data is fetched parallely for the next page.
+- Implemnted virtualization to render 50,0000 rows of data.
+- Levaraged shadcn to create awesome ui.
+- Implemented rate limit on the api.
+- Data is cached and revalidated to ensure speed and data consistancy.
 
-```sh
-npx create-turbo@latest
-```
+## Technologies
 
-## What's inside?
+- Express js for building the backend.
+- Prisma for schema generation and kyseley as query builder
+- Used Next js, tanstack query, tailwind css, for frontend.
+- Postgres and Redis for data storing.
+- Zod for data validation.
+- Typescript.
+- Jest for testing.
+- Turborepo for managing the repository.
 
-This Turborepo includes the following packages/apps:
+## Chalanges faced
 
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+- Setting up the Turborepo
+  It took some time to understand the overall setup and idea of turborepo, but it was worth it!
+- Implemnting a good type safety in all parts of the repository.
+- Rendering 50k rows simultaneously on frontend.
+  To achieve this I implemented virtualization.
+- Ensuring data consistancy.
+  Understood the best cases where we should invalidate cache.
