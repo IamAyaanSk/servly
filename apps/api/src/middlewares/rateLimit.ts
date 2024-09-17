@@ -19,7 +19,7 @@ export default async function rateLimiter(
 
     const totalUserRequests = await redisClient.incr(`$rate-limiter:${ip}`)
 
-    if (totalUserRequests - 1 > 20) {
+    if (totalUserRequests - 1 > 40) {
       const error = new HttpError(errorResponseMap['service/rateLimit'], 429)
       return next(error)
     }

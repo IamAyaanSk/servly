@@ -16,8 +16,10 @@ export const updateServiceRequestHistoryZodSchema = z.object({
     .optional(),
 
   amount: z
-    .number()
-    .positive({ message: 'Amount must be a positive number' })
+    .string()
+    .regex(/^(0|[1-9]\d*)(\.\d+)?$/, {
+      message: 'Invalid amount',
+    })
     .optional(),
 
   status: z
@@ -39,7 +41,12 @@ export const updateServiceRequestHistoryZodSchema = z.object({
     })
     .optional(),
 
-  fees: z.number().optional(),
+  fees: z
+    .string()
+    .regex(/^(0|[1-9]\d*)(\.\d+)?$/, {
+      message: 'Invalid fees',
+    })
+    .optional(),
 })
 
 export const updateServiceHistoryParamsZODSchema = z.object({

@@ -49,8 +49,8 @@ export default function EditRecordForm({
       serviceProvider: serviceDetails.service_provider,
       serviceType: serviceDetails.service_type,
       status: serviceDetails.status,
-      amount: serviceDetails.amount,
-      fees: serviceDetails.fees,
+      amount: serviceDetails.amount.toLocaleString(),
+      fees: serviceDetails.fees.toLocaleString(),
       description: serviceDetails.description,
     },
   })
@@ -222,7 +222,7 @@ export default function EditRecordForm({
                 <FormItem>
                   <FormLabel>Amount (₹)</FormLabel>
                   <FormControl className="relative">
-                    <Input {...field} type="number" />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -235,7 +235,7 @@ export default function EditRecordForm({
                 <FormItem>
                   <FormLabel>Fees (₹)</FormLabel>
                   <FormControl className="relative">
-                    <Input {...field} type="number" />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
