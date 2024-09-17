@@ -10,7 +10,7 @@
         "POSTGRES_CONNECTION_URL",
         "REDIS_CONNECTION_URL",
         "CLIENT_DOMAIN",
-        "SERVER_URL"
+        "NEXT_PUBLIC_SERVER_URL"
       ]
     },
     "db:generate": {
@@ -19,7 +19,7 @@
         "POSTGRES_CONNECTION_URL",
         "REDIS_CONNECTION_URL",
         "CLIENT_DOMAIN",
-        "SERVER_URL"
+        "NEXT_PUBLIC_SERVER_URL"
       ]
     },
     "db:push": {
@@ -28,7 +28,7 @@
         "POSTGRES_CONNECTION_URL",
         "REDIS_CONNECTION_URL",
         "CLIENT_DOMAIN",
-        "SERVER_URL"
+        "NEXT_PUBLIC_SERVER_URL"
       ],
       "inputs": [".env"]
     },
@@ -43,7 +43,7 @@
         "POSTGRES_CONNECTION_URL",
         "REDIS_CONNECTION_URL",
         "CLIENT_DOMAIN",
-        "SERVER_URL"
+        "NEXT_PUBLIC_SERVER_URL"
       ]
     },
     "start": {
@@ -53,7 +53,7 @@
         "POSTGRES_CONNECTION_URL",
         "REDIS_CONNECTION_URL",
         "CLIENT_DOMAIN",
-        "SERVER_URL"
+        "NEXT_PUBLIC_SERVER_URL"
       ]
     },
     "test": {
