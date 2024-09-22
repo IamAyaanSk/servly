@@ -33,6 +33,9 @@ Servly is a fullstack application which manages huge amount of data and renders 
 - Memory leaks.
   Used message pack for performant serialization/deserialization.
 
+## Note: 
+The initial data fetching may take time as the api is deployed on a free tier on render which automatically spins down when inactive.
+
 ## Author
 
 ### Ayaan Shaikh
