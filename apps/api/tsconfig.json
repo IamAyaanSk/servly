@@ -1,9 +1,8 @@
 {
   "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
-    "lib": ["ES2015"],
-    "outDir": "./dist",
-    "baseUrl": "."
+    "outDir": "dist",
+    "rootDir": "src"
   },
   "types": ["jest", "node"],
   "exclude": [
@@ -13,5 +12,5 @@
     "jest.config.js",
     "__tests__/**/*.ts"
   ],
-  "include": ["**/*.ts", "**/*.tsx", "src/**/*.ts"]
+  "include": ["src"]
 }

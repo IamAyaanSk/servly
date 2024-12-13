@@ -5,60 +5,28 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
-      "env": [
-        "POSTGRES_CONNECTION_URL",
-        "REDIS_CONNECTION_URL",
-        "CLIENT_DOMAIN",
-        "NEXT_PUBLIC_SERVER_URL"
-      ]
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
     "db:generate": {
-      "cache": false,
-      "env": [
-        "POSTGRES_CONNECTION_URL",
-        "REDIS_CONNECTION_URL",
-        "CLIENT_DOMAIN",
-        "NEXT_PUBLIC_SERVER_URL"
-      ]
+      "cache": false
     },
     "db:push": {
       "cache": false,
-      "env": [
-        "POSTGRES_CONNECTION_URL",
-        "REDIS_CONNECTION_URL",
-        "CLIENT_DOMAIN",
-        "NEXT_PUBLIC_SERVER_URL"
-      ],
       "inputs": [".env"]
     },
     "lint": {
       "dependsOn": ["^lint"]
     },
     "dev": {
-      "dependsOn": ["^db:generate"],
       "cache": false,
-      "persistent": true,
-      "env": [
-        "POSTGRES_CONNECTION_URL",
-        "REDIS_CONNECTION_URL",
-        "CLIENT_DOMAIN",
-        "NEXT_PUBLIC_SERVER_URL"
-      ]
+      "persistent": true
     },
     "start": {
       "dependsOn": ["^start"],
-      "cache": false,
-      "env": [
-        "POSTGRES_CONNECTION_URL",
-        "REDIS_CONNECTION_URL",
-        "CLIENT_DOMAIN",
-        "NEXT_PUBLIC_SERVER_URL"
-      ]
+      "cache": false
     },
     "test": {
-      "dependsOn": ["^test"],
-      "cache": true
+      "dependsOn": ["^test"]
     }
   }
 }
