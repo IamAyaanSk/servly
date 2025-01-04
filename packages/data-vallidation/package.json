@@ -6,9 +6,9 @@
     "build": "tsc"
   },
   "exports": {
-    "./zod": {
-      "types": "./src/zod.ts",
-      "default": "./dist/zod.js"
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
     }
   },
   "dependencies": {
@@ -18,8 +18,7 @@
   },
   "devDependencies": {
     "@repo/db": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "tsx": "^4.19.1",
-    "typescript": "^5.6.2"
+    "@servly/typescript-config": "workspace:*",
+    "tsx": "^4.19.1"
   }
 }

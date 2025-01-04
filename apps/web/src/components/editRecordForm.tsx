@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { updateServiceRequestHistoryZodSchema } from '@repo/data-validation/zod'
+import { updateServiceRequestHistoryZodSchema } from '@repo/data-validation'
 import { z } from 'zod'
 import { GetServiceHistoryPayload } from '@repo/common-types/api-responses'
 import { Loader2 } from 'lucide-react'

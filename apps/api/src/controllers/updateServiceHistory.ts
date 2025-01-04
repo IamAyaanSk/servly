@@ -4,7 +4,7 @@ import {
   serviceHistoryQueryZodSchema,
   updateServiceHistoryParamsZODSchema,
   updateServiceRequestHistoryZodSchema,
-} from '@repo/data-validation/zod'
+} from '@repo/data-validation'
 
 import { NextFunction, Request, Response } from 'express'
 import { redisClient } from '../constants/global.js'

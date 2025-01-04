@@ -1,9 +1,13 @@
 {
-  "name": "@repo/typescript-config",
-  "version": "0.0.0",
+  "name": "@servly/typescript-config",
+  "version": "1.0.0",
   "private": true,
-  "license": "MIT",
-  "publishConfig": {
-    "access": "public"
+  "dependencies": {
+    "@tsconfig/node20": "^20.1.4"
+  },
+  "peerDependencies": {
+    "tsconfig-paths": "^4.2.0",
+    "tslib": "^2.7.0",
+    "typescript": "^5.6.2"
   }
 }

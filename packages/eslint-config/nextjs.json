@@ -1,0 +1,6 @@
+{
+  "extends": ["next/core-web-vitals", "next/typescript", "prettier", "./base.json"],
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "warn"
+  }
+}

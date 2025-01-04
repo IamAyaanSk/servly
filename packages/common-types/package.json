@@ -15,8 +15,7 @@
   },
   "devDependencies": {
     "@repo/db": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "tsx": "^4.19.1",
-    "typescript": "^5.6.2"
+    "@servly/typescript-config": "workspace:*",
+    "tsx": "^4.19.1"
   }
 }

@@ -6,7 +6,7 @@ import {
   GetServiceHistoryResponse,
   ApiResponseStatus,
 } from '@repo/common-types/api-responses'
-import { serviceHistoryQueryZodSchema } from '@repo/data-validation/zod'
+import { serviceHistoryQueryZodSchema } from '@repo/data-validation'
 import { errorResponseMap } from '../constants/responseMaps/errorResponsMap.js'
 import { redisClient } from '../constants/global.js'
 

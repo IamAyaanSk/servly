@@ -23,10 +23,11 @@
     },
     "start": {
       "dependsOn": ["^start"],
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
     "test": {
-      "dependsOn": ["^test"]
+      "dependsOn": ["build"]
     }
   }
 }
