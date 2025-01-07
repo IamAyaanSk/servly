@@ -1,7 +1,7 @@
-import { HttpError } from '../constants/global.js'
-import redisClient from '@/configs/redisClient.js'
+import { HttpError } from '@/constants/global'
+import redisClient from '@/configs/redisClient'
 import { NextFunction, Request, Response } from 'express'
-import { errorResponseMap } from '../constants/responseMaps/errorResponsMap.js'
+import { errorResponseMap } from '@/constants/responseMaps/errorResponseMap'
 
 export default async function rateLimiter(
   req: Request,

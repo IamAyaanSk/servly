@@ -1,4 +1,4 @@
-import { errorResponseMap } from '../constants/responseMaps/errorResponsMap'
+import { errorResponseMap } from '@/constants/responseMaps/errorResponseMap'
 import { db as kysleyClient, sql } from '@repo/db/client'
 import {
   serviceHistoryQueryZodSchema,
@@ -13,8 +13,8 @@ import {
   ApiResponseStatus,
 } from '@repo/common-types/api-responses'
 
-import { HttpError } from '../constants/global.js'
-import { successResponseMap } from '../constants/responseMaps/successResponseMap.js'
+import { HttpError } from '@/constants/global'
+import { successResponseMap } from '@/constants/responseMaps/successResponseMap'
 
 export default async function (
   req: Request,

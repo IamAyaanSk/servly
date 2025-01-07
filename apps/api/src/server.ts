@@ -5,10 +5,10 @@ import express from 'express'
 import helmet from 'helmet'
 import cors from 'cors'
 
-import { PORT, CLIENT_DOMAIN } from './constants/global.js'
-import serviceRouter from './routes/serviceRouter.js'
-import errorHandler from './middlewares/errorHandler.js'
-import rateLimiter from './middlewares/rateLimit.js'
+import { PORT, CLIENT_DOMAIN } from '@/constants/global'
+import serviceRouter from '@/routes/serviceRouter'
+import errorHandler from '@/middlewares/errorHandler'
+import rateLimiter from '@/middlewares/rateLimit'
 
 const server: express.Application = express()
 

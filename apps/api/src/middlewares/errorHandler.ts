@@ -1,10 +1,10 @@
-import { HttpError } from '../constants/global.js'
+import { HttpError } from '@/constants/global'
 import {
   ApiResponseStatus,
   ErrorResponse,
 } from '@repo/common-types/api-responses'
 import { NextFunction, Response, Request } from 'express'
-import { errorResponseMap } from '../constants/responseMaps/errorResponsMap.js'
+import { errorResponseMap } from '@/constants/responseMaps/errorResponseMap'
 
 export default function errorHandler(
   err: HttpError,
