@@ -4,8 +4,11 @@
   "scripts": {
     "db:generate": "prisma generate",
     "db:push": "prisma db push --skip-generate",
-    "build": "tsc",
-    "dev": "tsx watch src/config.ts"
+    "db:migrate:deploy": "prisma migrate deploy",
+    "build": "rm -rf dist && tsc",
+    "lint": "eslint 'src/**/*.ts'",
+    "lint:fix": "eslint 'src/**/*.ts' --fix",
+    "dev": "tsc --watch --preserveWatchOutput --pretty"
   },
   "exports": {
     "./client": {
@@ -13,7 +16,7 @@
       "default": "./dist/config.js"
     },
     "./types": {
-      "types": "./src/generated/types.ts",
+      "types": "./generated/types.ts",
       "default": "./dist/generated/types.js"
     },
     "./enums": {
@@ -25,7 +28,7 @@
     "@types/pg": "^8.11.9",
     "prisma": "^5.19.1",
     "@servly/typescript-config": "workspace:*",
-    "tsx": "^4.19.1"
+    "@servly/eslint-config": "workspace:*"
   },
   "dependencies": {
     "kysely": "^0.27.4",

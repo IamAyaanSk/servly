@@ -1,4 +1,4 @@
-import { errorResponseMap } from '../constants/responseMaps/errorResponsMap.js'
+import { errorResponseMap } from '../constants/responseMaps/errorResponsMap'
 import { db as kysleyClient, sql } from '@repo/db/client'
 import {
   serviceHistoryQueryZodSchema,
@@ -7,7 +7,7 @@ import {
 } from '@repo/data-validation'
 
 import { NextFunction, Request, Response } from 'express'
-import { redisClient } from '../constants/global.js'
+import redisClient from '@/configs/redisClient'
 import {
   UpdateServiceHistoryResponse,
   ApiResponseStatus,
@@ -27,12 +27,11 @@ export default async function (
 
     if (!id) {
       const error = new HttpError(errorResponseMap['service/invalidId'], 400)
-      return next(error)
+      next(error)
     }
 
-    const updateServiceRequestData = req.body
     const validatedUpdateServiceRequestData =
-      updateServiceRequestHistoryZodSchema.parse(updateServiceRequestData)
+      updateServiceRequestHistoryZodSchema.parse(req.body)
 
     const serviceToUpdate = await kysleyClient
       .selectFrom('service_history')
@@ -53,30 +52,31 @@ export default async function (
 
     if (!serviceToUpdate) {
       const error = new HttpError(errorResponseMap['service/invalidId'], 400)
-      return next(error)
+      next(error)
+      return
     }
 
     // Update only the fields that are present in the request body
     const updatedService = {
       service_type:
-        validatedUpdateServiceRequestData.serviceType ||
+        validatedUpdateServiceRequestData.serviceType ??
         serviceToUpdate.service_type,
       description:
-        validatedUpdateServiceRequestData.description ||
+        validatedUpdateServiceRequestData.description ??
         serviceToUpdate.description,
       amount:
-        validatedUpdateServiceRequestData.amount || serviceToUpdate.amount,
+        validatedUpdateServiceRequestData.amount ?? serviceToUpdate.amount,
       status:
-        validatedUpdateServiceRequestData.status || serviceToUpdate.status,
+        validatedUpdateServiceRequestData.status ?? serviceToUpdate.status,
 
       payment_method:
-        validatedUpdateServiceRequestData.paymentMethod ||
+        validatedUpdateServiceRequestData.paymentMethod ??
         serviceToUpdate.payment_method,
       service_provider:
-        validatedUpdateServiceRequestData.serviceProvider ||
+        validatedUpdateServiceRequestData.serviceProvider ??
         serviceToUpdate.service_provider,
 
-      fees: validatedUpdateServiceRequestData.fees || serviceToUpdate.fees,
+      fees: validatedUpdateServiceRequestData.fees ?? serviceToUpdate.fees,
     }
 
     await kysleyClient.transaction().execute(async (trx) => {
@@ -95,13 +95,13 @@ export default async function (
         .executeTakeFirstOrThrow()
     })
 
-    redisClient.del(`service_history:page-${page}`)
+    await redisClient.del(`service_history:page-${page}`)
 
     return res.status(201).json({
       status: ApiResponseStatus.success,
       response: successResponseMap['service/fetch'],
     })
   } catch (err) {
-    return next(err)
+    next(err)
   }
 }

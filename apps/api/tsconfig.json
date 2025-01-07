@@ -4,7 +4,6 @@
     "outDir": "dist",
     "baseUrl": "./src"
   },
-  "types": ["jest", "node"],
   "exclude": [
     "node_modules",
     "./coverage",
@@ -12,5 +11,5 @@
     "jest.config.js",
     "__tests__/**/*.ts"
   ],
-  "include": ["src"]
+  "include": ["src/**/*"]
 }

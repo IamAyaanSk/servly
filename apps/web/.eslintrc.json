@@ -1,0 +1,3 @@
+{
+  "extends": ["@servly/eslint-config/nextjs.json"]
+}

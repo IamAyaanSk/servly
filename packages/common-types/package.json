@@ -1,11 +1,12 @@
 {
   "name": "@repo/common-types",
-  "type": "module",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "tsx watch src/apiResponses.ts",
-    "build": "tsc"
+    "build": "rm -rf dist && tsc",
+    "lint": "eslint 'src/**/*.ts'",
+    "lint:fix": "eslint 'src/**/*.ts' --fix",
+    "dev": "tsc --watch --preserveWatchOutput --pretty"
   },
   "exports": {
     "./api-responses": {
@@ -16,6 +17,6 @@
   "devDependencies": {
     "@repo/db": "workspace:*",
     "@servly/typescript-config": "workspace:*",
-    "tsx": "^4.19.1"
+    "@servly/eslint-config": "workspace:*"
   }
 }

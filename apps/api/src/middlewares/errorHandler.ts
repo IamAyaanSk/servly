@@ -12,9 +12,9 @@ export default function errorHandler(
   res: Response<ErrorResponse>,
   next: NextFunction
 ) {
-  res.status(err.status || 500).json({
+  res.status(err.status).json({
     status: ApiResponseStatus.error,
-    response: err.message || errorResponseMap['server/defaultInternalError'],
-    detail: err.stack || errorResponseMap['service/defaultErrorStack'],
+    response: err.message,
+    detail: err.stack ?? errorResponseMap['service/defaultErrorStack'],
   })
 }

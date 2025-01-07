@@ -7,8 +7,8 @@ import {
   ApiResponseStatus,
 } from '@repo/common-types/api-responses'
 import { serviceHistoryQueryZodSchema } from '@repo/data-validation'
-import { errorResponseMap } from '../constants/responseMaps/errorResponsMap.js'
-import { redisClient } from '../constants/global.js'
+import { errorResponseMap } from '../constants/responseMaps/errorResponsMap'
+import redisClient from '@/configs/redisClient'
 
 export default async function getServiceHistory(
   req: Request,
@@ -25,9 +25,9 @@ export default async function getServiceHistory(
     ])
 
     if (cachedDatabaseResponse && totalResultsCached) {
-      const unpackedCachedDatabaseResponse: GetServiceHistoryPayload[] = unpack(
+      const unpackedCachedDatabaseResponse = unpack(
         cachedDatabaseResponse
-      )
+      ) as GetServiceHistoryPayload[]
       return res.json({
         status: ApiResponseStatus.success,
         response: {
@@ -101,6 +101,6 @@ export default async function getServiceHistory(
       },
     })
   } catch (err) {
-    return next(err)
+    next(err)
   }
 }

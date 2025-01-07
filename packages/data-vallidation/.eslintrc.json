@@ -1,0 +1,3 @@
+{
+  "extends": ["@servly/eslint-config/server.json"]
+}
